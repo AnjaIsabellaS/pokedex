@@ -1,4 +1,4 @@
-let pokemonStorage = [];
+const pokemonStorage = [];
 
 async function getPokemon() {
     if (pokemonStorage.length > 0) {
@@ -19,3 +19,11 @@ async function getPokemon() {
 
     return pokemonStorage;
 }
+
+async function showPokemon() {
+    const pokemonList = await getPokemon(); 
+    
+    console.log(pokemonList);
+}
+
+showPokemon();
