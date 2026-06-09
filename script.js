@@ -13,7 +13,7 @@ async function getPokemon() {
         pokemonStorage.push({
             id: data.id,
             name: data.name,
-            image: data.sprites.other["official-artwork"].front_default
+            image: data.sprites.other["home"].front_default
         });
     }
 
