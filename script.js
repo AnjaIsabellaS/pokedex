@@ -24,15 +24,19 @@ async function showPokemon() {
     const pokemonList = await getPokemon();
     const content = document.getElementById('content');
     
-    content.innerHTML = ''; // Container leeren
+    content.innerHTML = ''; 
 
-    pokemonList.forEach((pokemon) => {
-        content.innerHTML += `
-            <div class="pokemon-card">
-                <h3>#${pokemon.id} ${pokemon.name.toUpperCase()}</h3>
-                <img src="${pokemon.image}" alt="${pokemon.name}">
-            </div>
-        `;
-    });
+    for (let i = 0; i < pokemonList.length; i++) {
+        content.innerHTML += getPokemonCardTemplate(pokemonList[i]);
+    }
+}
+
+function getPokemonCardTemplate(pokemon) {
+    return `
+        <div class="pokemon-card">
+            <h3>#${pokemon.id} ${pokemon.name.toUpperCase()}</h3>
+            <img src="${pokemon.image}" alt="${pokemon.name}">
+        </div>
+    `;
 }
 
