@@ -21,9 +21,18 @@ async function getPokemon() {
 }
 
 async function showPokemon() {
-    const pokemonList = await getPokemon(); 
+    const pokemonList = await getPokemon();
+    const content = document.getElementById('content');
     
-    console.log(pokemonList);
+    content.innerHTML = ''; // Container leeren
+
+    pokemonList.forEach((pokemon) => {
+        content.innerHTML += `
+            <div class="pokemon-card">
+                <h3>#${pokemon.id} ${pokemon.name.toUpperCase()}</h3>
+                <img src="${pokemon.image}" alt="${pokemon.name}">
+            </div>
+        `;
+    });
 }
 
-showPokemon();
