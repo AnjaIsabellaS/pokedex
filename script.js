@@ -13,11 +13,13 @@ async function getPokemon() {
         pokemonStorage.push({
             id: data.id,
             name: data.name,
-            image: data.sprites.other["home"].front_default
+            image: data.sprites.other["home"].front_default,
+            types: data.types.map(element => element.type.name)
         });
     }
 
     return pokemonStorage;
+    
 }
 
 async function showPokemon() {
@@ -35,7 +37,17 @@ function getPokemonCardTemplate(pokemon) {
     return `
         <div class="pokemon-card">
             <h3>#${pokemon.id} ${pokemon.name.toUpperCase()}</h3>
+
             <img src="${pokemon.image}" alt="${pokemon.name}">
+
+            <div class="type-container">
+                ${pokemon.types.map(type => `
+                    <button class="type-btn ${type}">
+                        ${type}
+                    </button>
+                `).join('')}
+            </div>
+
         </div>
     `;
 }
