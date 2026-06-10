@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+.pokemon_header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 50px;
+    background-color: rgba(9, 33, 42, 1);
+}
+
+.pokemon_header img {
+    height: 150px;
+}
+
+h1 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 35px;
+    color: white;
+}
