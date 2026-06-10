@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: #0d1e26; /* Hintergrundfarbe des Pokedex-Bereichs */
+    background-color: #0d1e26; 
     font-family: sans-serif;
 }
 
@@ -35,4 +35,31 @@ h1 {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 35px;
     color: white;
+}
+
+.pokemon-card {
+    flex: 0 0 calc((100% - 80px) / 5);
+    background-color: #2b3941; 
+    border-radius: 12px;
+    padding: 15px;
+    width: 200px;
+    text-align: center;
+    color: white;
+    transition: transform 0.2s;
+}
+
+.pokemon-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-top: 10px;
+}
+
+.pokemon-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.pokemon-card:hover {
+    transform: scale(1.05); 
 }
