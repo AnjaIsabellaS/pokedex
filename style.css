@@ -9,6 +9,14 @@ body {
     font-family: sans-serif;
 }
 
+#content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
+
 .pokemon_header {
     display: flex;
     justify-content: flex-start;
