@@ -12,6 +12,14 @@
      <section class="pokemon_header">
         <img src="./assets/icons/pokemon.png" alt="Pokemon">
         <h1>Pokedex</h1>
+
+      <div class="search-container">
+         <input type="text" id="searchInput" placeholder="Suche nach Pokémon..." oninput="checkInput()">
+         <button onclick="handleSearch()">Suchen</button>
+         <span id="errorMessage" class="error-message">
+            Bitte mindestens 3 Zeichen eingeben.
+         </span>
+      </div>
      </section>
   </header>
   <main></main>
