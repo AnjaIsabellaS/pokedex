@@ -191,6 +191,26 @@ h1 {
     text-align: center;
 }
 
+.load-more-container {
+    text-align: center;
+    margin: 20px;
+}
+
+.load-more-btn {
+    padding: 12px 25px;
+    background-color: #ffcb05;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.load-more-btn:hover {
+    background-color: #e6b800;
+}
+
 footer {
     background-color: rgba(9, 33, 42, 1);
     color: white;
