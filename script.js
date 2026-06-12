@@ -1,7 +1,7 @@
 let pokemonStorage = [];
 let currentOffset = 1; 
 const limit = 30;
-const maxPokemon = 150;
+const maxPokemon = 151;
 
 
 async function getPokemonRange(start, count) {
