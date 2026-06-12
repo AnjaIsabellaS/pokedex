@@ -25,30 +25,53 @@ async function getPokemonRange(start, count) {
 
 
 async function showPokemon() {
+
+    showLoadingScreen();
+
     pokemonStorage = await getPokemonRange(currentOffset, limit);
+
     renderResults(pokemonStorage, "");
+
     currentOffset += limit;
+
+    hideLoadingScreen();
 }
 
 
 async function loadMorePokemon() {
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+    loadMoreBtn.disabled = true;
+
+    showLoadingScreen();
+
     const morePokemon = await getPokemonRange(currentOffset, limit);
-    
 
     pokemonStorage = [...pokemonStorage, ...morePokemon];
-    
 
     const content = document.getElementById('content');
+
     morePokemon.forEach(pokemon => {
         content.innerHTML += getPokemonCardTemplate(pokemon);
     });
 
     currentOffset += limit;
 
-  
+    hideLoadingScreen();
+
     if (currentOffset > maxPokemon) {
-        document.getElementById('loadMoreBtn').style.display = 'none';
+        loadMoreBtn.style.display = 'none';
+    } else {
+        loadMoreBtn.disabled = false;
     }
+}
+
+function showLoadingScreen() {
+    document.getElementById('loadingOverlay').style.display = 'flex';
+}
+
+function hideLoadingScreen() {
+    document.getElementById('loadingOverlay').style.display = 'none';
 }
 
 async function handleSearch() {
