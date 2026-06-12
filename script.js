@@ -1,28 +1,56 @@
-const pokemonStorage = [];
+let pokemonStorage = [];
+let currentOffset = 1; 
+const limit = 30;
+const maxPokemon = 150;
 
-// Retrieve the Pokémon data from the API or from memory
-async function getPokemon() {
-    if (pokemonStorage.length > 0) {
-        return pokemonStorage;
-    }
 
-    for (let i = 1; i <= 30; i++) {
+async function getPokemonRange(start, count) {
+    let newPokemon = [];
+    for (let i = start; i < start + count; i++) {
+        if (i > maxPokemon) break;
+        
         let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         let response = await fetch(url);
         let data = await response.json();
 
-        pokemonStorage.push({
+        newPokemon.push({
             id: data.id,
             name: data.name,
             image: data.sprites.other["home"].front_default,
             types: data.types.map(element => element.type.name)
         });
     }
-    return pokemonStorage;
+    return newPokemon;
 }
 
 
-// The main function that is executed when you click “Search”
+async function showPokemon() {
+    pokemonStorage = await getPokemonRange(currentOffset, limit);
+    renderResults(pokemonStorage, "");
+    currentOffset += limit;
+}
+
+
+async function loadMorePokemon() {
+    const morePokemon = await getPokemonRange(currentOffset, limit);
+    
+
+    pokemonStorage = [...pokemonStorage, ...morePokemon];
+    
+
+    const content = document.getElementById('content');
+    morePokemon.forEach(pokemon => {
+        content.innerHTML += getPokemonCardTemplate(pokemon);
+    });
+
+    currentOffset += limit;
+
+  
+    if (currentOffset > maxPokemon) {
+        document.getElementById('loadMoreBtn').style.display = 'none';
+    }
+}
+
 async function handleSearch() {
     const input = getSearchInput();
 
@@ -30,50 +58,18 @@ async function handleSearch() {
         return; 
     }
 
-    const allPokemon = await getPokemon();
-    const filtered = filterPokemon(allPokemon, input);
-
+    const filtered = filterPokemon(pokemonStorage, input);
     renderResults(filtered, input);
-}
-
-
-// Called every time the user types (oninput)
-function checkInput() {
-    const length = document.getElementById('searchInput').value.length;
-    toggleErrorMessage(length);
-}
-
-
-// Logic for the error message
-function toggleErrorMessage(length) {
-    const errorMsg = document.getElementById('errorMessage');
-    const isInvalid = (length > 0 && length < 3);
     
-    errorMsg.style.display = isInvalid ? 'block' : 'none';
-    
-    return isInvalid; 
+    document.getElementById('loadMoreBtn').style.display = 'none';
 }
 
-
-// Help function: Retrieves and cleans up the search term
-function getSearchInput() {
-    return document.getElementById('searchInput').value.trim().toLowerCase();
-}
-
-
-// Logical function: Filters the array
-function filterPokemon(allPokemon, input) {
-    return allPokemon.filter(pokemon => pokemon.name.toLowerCase().includes(input));
-}
-
-
-// Displays the Pokémon cards or the “No results” message
-function renderResults(filteredPokemon, input) {
+function renderResults(pokemonArray, input) {
     const content = document.getElementById('content');
     content.innerHTML = '';
 
-    if (filteredPokemon.length > 0) {
-        filteredPokemon.forEach(pokemon => {
+    if (pokemonArray.length > 0) {
+        pokemonArray.forEach(pokemon => {
             content.innerHTML += getPokemonCardTemplate(pokemon);
         });
     } else if (input.length >= 3) {
@@ -81,19 +77,31 @@ function renderResults(filteredPokemon, input) {
     }
 }
 
-
-// Function for loading all Pokémon at startup
-async function showPokemon() {
-    const pokemonList = await getPokemon();
-    const content = document.getElementById('content');
-    content.innerHTML = ''; 
-    for (let i = 0; i < pokemonList.length; i++) {
-        content.innerHTML += getPokemonCardTemplate(pokemonList[i]);
+function checkInput() {
+    const input = document.getElementById('searchInput').value;
+    toggleErrorMessage(input.length);
+    
+    if (input.length === 0) {
+        document.getElementById('loadMoreBtn').style.display = currentOffset <= maxPokemon ? 'block' : 'none';
+        renderResults(pokemonStorage, "");
     }
 }
 
+function toggleErrorMessage(length) {
+    const errorMsg = document.getElementById('errorMessage');
+    const isInvalid = (length > 0 && length < 3);
+    errorMsg.style.display = isInvalid ? 'block' : 'none';
+    return isInvalid; 
+}
 
-// Template for Pokémon cards
+function getSearchInput() {
+    return document.getElementById('searchInput').value.trim().toLowerCase();
+}
+
+function filterPokemon(allPokemon, input) {
+    return allPokemon.filter(pokemon => pokemon.name.toLowerCase().includes(input));
+}
+
 function getPokemonCardTemplate(pokemon) {
     return `
         <div class="pokemon-card">
