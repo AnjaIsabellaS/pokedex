@@ -443,3 +443,79 @@ footer {
     padding: 30px;
     margin-top: 40px;
 }
+
+/* Responsive*/
+@media (max-width: 950px) {
+    dialog {
+        width: 95vw;
+        height: 720px;
+    }
+
+    .dialog_main {
+        flex-direction: column;
+    }
+
+    .dialog_left {
+        width: 100%;
+        height: 340px;
+    }
+
+    .dialog_img_area img {
+        width: 230px;
+        height: 230px;
+    }
+}
+
+@media (max-width: 800px) {
+    .pokemon-card {
+        flex: 0 0 calc((100% - 20px) / 2);
+    }
+
+    .pokemon_header {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .search-container {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 500px) {
+    .pokemon-card {
+        flex: 0 0 100%;
+    }
+
+    .pokemon_header {
+        gap: 10px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .search-container {
+        flex-direction: column;
+    }
+
+    dialog {
+        height: 690px;
+    }
+
+    .dialog_header h2 {
+        font-size: 1.2rem;
+    }
+
+    .dialog_tabs button {
+        font-size: 0.9rem;
+    }
+
+    .dialog_stats {
+        padding: 24px;
+    }
+
+    .dialog_stats p {
+        font-size: 0.9rem;
+    }
+}
