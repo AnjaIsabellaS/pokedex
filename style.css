@@ -39,6 +39,7 @@ h1 {
 }
 
 .pokemon-card {
+    cursor: pointer;
     flex: 0 0 calc((100% - 80px) / 5);
     background-color: #2b3941; 
     border-radius: 12px;
@@ -273,6 +274,45 @@ h1 {
 .load-more-btn:disabled {
     cursor: not-allowed;
     opacity: 0.6;
+}
+
+dialog {
+    margin: auto;
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+    background: transparent;
+    max-width: 500px;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.dialog_content {
+    background: #2b3941;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.dialog_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.dialog_main_img_container img {
+    width: 250px;
+    height: 250px;
+}
+
+.dialog_footer_navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
 }
 
 footer {
