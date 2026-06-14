@@ -1,46 +1,47 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
-    <link rel="icon" type="image/x-icon" href="./assets/icons/pokemon.png"/>
+    <link rel="icon" type="image/x-icon" href="./assets/icons/pokemon.png" />
     <link rel="stylesheet" href="style.css" />
 </head>
+
 <body onload="showPokemon()">
-  <div id="loadingOverlay" class="loading-overlay">
-      <div class="loading-content">
-          <img src="./assets/icons/pokemon.png" alt="Loading">
-          <h2>Lade Pokémon...</h2>
-      </div>
-  </div>
-  <header>
-     <section class="pokemon_header">
-        <img src="./assets/icons/pokemon.png" alt="Pokemon">
-        <h1>Pokedex</h1>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <img src="./assets/icons/pokemon.png" alt="Loading">
+            <h2>Lade Pokémon...</h2>
+        </div>
+    </div>
+    <header>
+        <section class="pokemon_header">
+            <img src="./assets/icons/pokemon.png" alt="Pokemon">
+            <h1>Pokedex</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Suche nach Pokémon..." oninput="checkInput()">
+                <button onclick="handleSearch()">Suchen</button>
+                <span id="errorMessage" class="error-message">Bitte mindestens 3 Zeichen eingeben.</span>
+            </div>
+        </section>
+    </header>
+    <main id="content"></main>
+    <dialog id="pokemonDialog"></dialog>
+    <div class="load-more-container">
+        <button id="loadMoreBtn" onclick="loadMorePokemon()" class="load-more-btn">
+            Mehr laden
+        </button>
 
-      <div class="search-container">
-         <input type="text" id="searchInput" placeholder="Suche nach Pokémon..." oninput="checkInput()">
-         <button onclick="handleSearch()">Suchen</button>
-         <span id="errorMessage" class="error-message">
-            Bitte mindestens 3 Zeichen eingeben.
-         </span>
-      </div>
-     </section>
-  </header>
-  <main></main>
-  <dialog id="pokemonDialog"></dialog>
-  <section id="content"></section>
-  <div class="load-more-container">
-    <button id="loadMoreBtn" onclick="loadMorePokemon()" class="load-more-btn">
-        Mehr laden
-    </button>
-   </div>
+    </div>
 
-  <footer>
-      <p>&copy; 2026 Pokedex Projekt</p>
-  </footer>
-   
-  <script src="script.js"></script>
+    <footer>
+        <p>&copy; 2026 Pokedex Projekt</p>
+    </footer>
+
+    <script src="script.js"></script>
+
 </body>
+
 </html>
