@@ -523,3 +523,35 @@ footer {
         font-size: 0.9rem;
     }
 }
+
+.stat-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 40px;
+    align-items: center;
+    gap: 12px;
+}
+
+.stat-name {
+    color: #ffcb05;
+    font-weight: bold;
+    text-transform: capitalize;
+    font-size: 0.95rem;
+}
+
+.progress-bar {
+    height: 14px;
+    background-color: #123540;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #ffcb05;
+    border-radius: 20px;
+}
+
+.stat-value {
+    text-align: right;
+    font-weight: bold;
+}

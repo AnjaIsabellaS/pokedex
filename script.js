@@ -19,7 +19,8 @@ async function getPokemonRange(start, count) {
             height: data.height / 10,
             weight: data.weight / 10,
             baseExperience: data.base_experience,
-            abilities: data.abilities.map(element => element.ability.name)
+            abilities: data.abilities.map(element => element.ability.name),
+            stats: data.stats.map(element => ({name: element.stat.name,value: element.base_stat}))
         });
     }
     return newPokemon;
@@ -62,6 +63,7 @@ function getDialogTemplate(pokemon, index) {
                 <h2>#${pokemon.id} ${pokemon.name}</h2>
                 <button onclick="closeDialog()"> ✕</button>
             </header>
+
             <div class="dialog_main">
                 <div class="dialog_left">
                     <div class="dialog_img_area ${pokemon.types[0]}">
@@ -71,26 +73,65 @@ function getDialogTemplate(pokemon, index) {
                         <img src="${pokemon.image}" alt="${pokemon.name}">
                     </div>
                 </div>
+
                 <div class="dialog_right">
                     <div class="dialog_tabs">
-                        <button class="active">main</button>
-                        <button>stats</button>
+                        <button id="mainTab" class="active" onclick="showMainInfo()">main</button>
+                        <button id="statsTab" onclick="showStatsInfo()">stats</button>
                         <button>evo chain</button>
                     </div>
-                    <div class="dialog_stats">
-                        <p><span>Height:</span>${pokemon.height} m</p>
-                        <p><span>Weight:</span>${pokemon.weight} kg</p>
-                        <p><span>Base experience:</span>${pokemon.baseExperience}</p>
-                        <p><span>Abilities:</span>${pokemon.abilities.join(', ')}</p>
+
+                    <div id="dialogInfo" class="dialog_stats">
+                        ${getMainInfoTemplate(pokemon)}
                     </div>
                 </div>
             </div>
+
             <nav class="dialog_footer_navigation">
                 <button class="nav_btn" onclick="changePokemon(event, ${index}, -1)"> ← </button>
-                <button class="nav_btn"onclick="changePokemon(event, ${index}, 1)"> →</button>
+                <button class="nav_btn" onclick="changePokemon(event, ${index}, 1)"> →</button>
             </nav>
         </section>
     `;
+}
+
+function getMainInfoTemplate(pokemon) {
+    return `
+        <p><span>Height:</span>${pokemon.height} m</p>
+        <p><span>Weight:</span>${pokemon.weight} kg</p>
+        <p><span>Base experience:</span>${pokemon.baseExperience}</p>
+        <p><span>Abilities:</span>${pokemon.abilities.join(', ')}</p>
+    `;
+}
+
+function getStatsTemplate(pokemon) {
+    return pokemon.stats.map(stat => `
+        <div class="stat-row">
+            <span class="stat-name">${stat.name}</span>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: ${stat.value}%"></div>
+            </div>
+            <span class="stat-value">${stat.value}</span>
+        </div>
+    `).join('');
+}
+
+function showMainInfo() {
+    const pokemonId = Number(dialogRef.querySelector('.dialog_header h2').textContent.split(' ')[0].replace('#', ''));
+    const pokemon = pokemonStorage.find(p => p.id === pokemonId);
+
+    document.getElementById('dialogInfo').innerHTML = getMainInfoTemplate(pokemon);
+    document.getElementById('mainTab').classList.add('active');
+    document.getElementById('statsTab').classList.remove('active');
+}
+
+function showStatsInfo() {
+    const pokemonId = Number(dialogRef.querySelector('.dialog_header h2').textContent.split(' ')[0].replace('#', ''));
+    const pokemon = pokemonStorage.find(p => p.id === pokemonId);
+
+    document.getElementById('dialogInfo').innerHTML = getStatsTemplate(pokemon);
+    document.getElementById('statsTab').classList.add('active');
+    document.getElementById('mainTab').classList.remove('active');
 }
 
 function changePokemon(event, currentIndex, step) {
