@@ -112,27 +112,31 @@ function closeDialog() {
 function renderResults(pokemonArray, input) {
     const content = document.getElementById('content');
     content.innerHTML = '';
-    if (pokemonArray.length > 0) {
-        pokemonArray.forEach((pokemon, index) => {
-            content.innerHTML += getPokemonCardTemplate(pokemon,index);
-        });
 
+    if (pokemonArray.length > 0) {
+        pokemonArray.forEach((pokemon) => {
+            content.innerHTML += getPokemonCardTemplate(pokemon);
+        });
     } else if (input.length >= 3) {
-        content.innerHTML = `
-            <p class="no-results">Kein Pokémon gefunden!</p>
-        `;
+        content.innerHTML = `<p class="no-results">Kein Pokémon gefunden!</p>`;
     }
 }
 
-function getPokemonCardTemplate(pokemon, index) {
+function getPokemonCardTemplate(pokemon) {
     return `
-        <div class="pokemon-card" onclick="openDialog(${index})">
+        <div class="pokemon-card" onclick="openDialogById(${pokemon.id})">
             <h3>#${pokemon.id} ${pokemon.name.toUpperCase()}</h3>
             <img src="${pokemon.image}" alt="${pokemon.name}">
-            <div class="type-container">${pokemon.types.map(type => `<button class="type-btn ${type}">${type}</button>`).join('')}
+            <div class="type-container">
+                ${pokemon.types.map(type => `<button class="type-btn ${type}">${type}</button>`).join('')}
             </div>
         </div>
     `;
+}
+
+function openDialogById(id) {
+    const index = pokemonStorage.findIndex(pokemon => pokemon.id === id);
+    openDialog(index);
 }
 
 function showLoadingScreen() {
