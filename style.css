@@ -448,11 +448,48 @@ footer {
     margin-top: 40px;
 }
 
+.stat-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 40px;
+    align-items: center;
+    gap: 12px;
+}
+
+.stat-name {
+    color: #ffcb05;
+    font-weight: bold;
+    text-transform: capitalize;
+    font-size: 0.95rem;
+}
+
+.progress-bar {
+    height: 14px;
+    background-color: #123540;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #ffcb05;
+    border-radius: 20px;
+}
+
+.stat-value {
+    text-align: right;
+    font-weight: bold;
+}
+
 /* Responsive*/
 @media (max-width: 950px) {
     dialog {
         width: 95vw;
         height: 720px;
+    }
+
+    .dialog_header button {
+    width: 38px;
+    height: 38px;
     }
 
     .dialog_main {
@@ -461,12 +498,17 @@ footer {
 
     .dialog_left {
         width: 100%;
-        height: 340px;
+        height: 280px;
     }
 
     .dialog_img_area img {
         width: 230px;
         height: 230px;
+    }
+
+    .nav_btn {
+    width: 44px;
+    height: 44px;
     }
 }
 
@@ -511,6 +553,11 @@ footer {
         font-size: 1.2rem;
     }
 
+    .dialog_header button {
+    width: 32px;
+    height: 32px;
+    }
+
     .dialog_tabs button {
         font-size: 0.9rem;
     }
@@ -522,36 +569,10 @@ footer {
     .dialog_stats p {
         font-size: 0.9rem;
     }
+
+    .nav_btn {
+        width: 36px;
+        height: 36px;
+    }
 }
 
-.stat-row {
-    display: grid;
-    grid-template-columns: 130px 1fr 40px;
-    align-items: center;
-    gap: 12px;
-}
-
-.stat-name {
-    color: #ffcb05;
-    font-weight: bold;
-    text-transform: capitalize;
-    font-size: 0.95rem;
-}
-
-.progress-bar {
-    height: 14px;
-    background-color: #123540;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    background-color: #ffcb05;
-    border-radius: 20px;
-}
-
-.stat-value {
-    text-align: right;
-    font-weight: bold;
-}
