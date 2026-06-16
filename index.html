@@ -28,7 +28,7 @@
         </section>
     </header>
     <main id="content"></main>
-    <dialog id="pokemonDialog"></dialog>
+    <dialog id="pokemonDialog" onclick="if(event.target.id === 'pokemonDialog') this.close()"></dialog>
     <div class="load-more-container">
         <button id="loadMoreBtn" onclick="loadMorePokemon()" class="load-more-btn">
             Mehr laden

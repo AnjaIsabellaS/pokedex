@@ -67,7 +67,7 @@ function getDialogTemplate(pokemon, index) {
     const isLast = index === pokemonStorage.length - 1;
 
     return `
-        <section class="dialog_content" onclick="event.stopPropagation()">
+        <section class="dialog_content">
             <header class="dialog_header">
                 <h2>#${pokemon.id} ${pokemon.name}</h2>
                 <button onclick="closeDialog()"> ✕</button>
