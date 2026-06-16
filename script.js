@@ -1,4 +1,5 @@
 let pokemonStorage = [];
+let currentViewList = [];
 let currentOffset = 1;
 const limit = 30;
 const maxPokemon = 151;
@@ -33,6 +34,7 @@ async function getPokemonRange(start, count) {
 async function showPokemon() {
     showLoadingScreen();
     pokemonStorage = await getPokemonRange(currentOffset, limit);
+    currentViewList = pokemonStorage;
     renderResults(pokemonStorage, "");
     currentOffset += limit;
     hideLoadingScreen();
@@ -44,6 +46,7 @@ async function loadMorePokemon() {
     showLoadingScreen();
     const morePokemon = await getPokemonRange(currentOffset, limit);
     pokemonStorage = [...pokemonStorage, ...morePokemon];
+    currentViewList = pokemonStorage;
     renderResults(pokemonStorage, "");
     currentOffset += limit;
     hideLoadingScreen();
@@ -60,11 +63,11 @@ function openDialog(index) {
     dialogRef.showModal();
 }
 
-// --- GEÄNDERTE FUNKTION ---
+
 function getDialogTemplate(pokemon, index) {
-    // Navigations-Zustand berechnen
-    const isFirst = index === 0;
-    const isLast = index === pokemonStorage.length - 1;
+    const currentViewIndex = currentViewList.findIndex(p => p.id === pokemon.id);
+    const isFirst = currentViewIndex <= 0;
+    const isLast = currentViewIndex === currentViewList.length - 1;
 
     return `
         <section class="dialog_content">
@@ -80,11 +83,15 @@ function getDialogTemplate(pokemon, index) {
                             ${pokemon.types.map(type => `<button class="type-btn ${type}">${type}</button>`).join('')}
                         </div>
                         
-                        <button class="img_nav_btn left" onclick="changePokemon(event, ${index}, -1)" ${isFirst ? 'disabled' : ''}> ← </button>
+                        <button class="img_nav_btn left" 
+                                onclick="changePokemon(event, ${currentViewIndex}, -1)" 
+                                ${isFirst ? 'disabled' : ''}> ← </button>
                         
                         <img src="${pokemon.image}" alt="${pokemon.name}">
                         
-                        <button class="img_nav_btn right" onclick="changePokemon(event, ${index}, 1)" ${isLast ? 'disabled' : ''}> →</button>
+                        <button class="img_nav_btn right" 
+                                onclick="changePokemon(event, ${currentViewIndex}, 1)" 
+                                ${isLast ? 'disabled' : ''}> →</button>
                     </div>
                 </div>
 
@@ -144,15 +151,15 @@ function showStatsInfo() {
     document.getElementById('mainTab').classList.remove('active');
 }
 
-function changePokemon(event, currentIndex, step) {
+function changePokemon(event, currentViewIndex, step) {
     event.stopPropagation();
-    let newIndex = currentIndex + step;
+    let newIndex = currentViewIndex + step;
 
-    if (newIndex < 0 || newIndex >= pokemonStorage.length) {
-        return; 
+    if (newIndex >= 0 && newIndex < currentViewList.length) {
+        const nextPokemon = currentViewList[newIndex];
+        const globalIndex = pokemonStorage.findIndex(p => p.id === nextPokemon.id);
+        openDialog(globalIndex);
     }
-    
-    openDialog(newIndex);
 }
 
 function closeDialog() {
@@ -203,8 +210,8 @@ function handleSearch() {
     const input = getSearchInput();
     if (toggleErrorMessage(input.length)) 
         return;
-    const filtered = filterPokemon(pokemonStorage,input);
-    renderResults(filtered, input);
+    currentViewList = filterPokemon(pokemonStorage, input); 
+    renderResults(currentViewList, input);
     document.getElementById('loadMoreBtn').style.display = 'none';
 }
 
@@ -212,6 +219,7 @@ function checkInput() {
     const input = document.getElementById('searchInput').value;
     toggleErrorMessage(input.length);
     if (input.length === 0) {
+        currentViewList = pokemonStorage;
         document.getElementById('loadMoreBtn').style.display =
             currentOffset <= maxPokemon
                 ? 'block'
