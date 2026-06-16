@@ -8,20 +8,24 @@ async function getPokemonRange(start, count) {
     let newPokemon = [];
     for (let i = start; i < start + count; i++) {
         if (i > maxPokemon) break;
-        let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-        let response = await fetch(url);
-        let data = await response.json();
-        newPokemon.push({
-            id: data.id,
-            name: data.name,
-            image: data.sprites.other["home"].front_default,
-            types: data.types.map(element => element.type.name),
-            height: data.height / 10,
-            weight: data.weight / 10,
-            baseExperience: data.base_experience,
-            abilities: data.abilities.map(element => element.ability.name),
-            stats: data.stats.map(element => ({name: element.stat.name,value: element.base_stat}))
-        });
+        try {
+            let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+            let response = await fetch(url);
+            let data = await response.json();
+            newPokemon.push({
+                id: data.id,
+                name: data.name,
+                image: data.sprites.other["home"].front_default,
+                types: data.types.map(element => element.type.name),
+                height: data.height / 10,
+                weight: data.weight / 10,
+                baseExperience: data.base_experience,
+                abilities: data.abilities.map(element => element.ability.name),
+                stats: data.stats.map(element => ({name: element.stat.name,value: element.base_stat}))
+            });
+        } catch (error) {
+            console.error(`Fehler beim Laden von Pokémon ${i}:`, error);
+        }
     }
     return newPokemon;
 }
@@ -56,7 +60,12 @@ function openDialog(index) {
     dialogRef.showModal();
 }
 
+// --- GEÄNDERTE FUNKTION ---
 function getDialogTemplate(pokemon, index) {
+    // Navigations-Zustand berechnen
+    const isFirst = index === 0;
+    const isLast = index === pokemonStorage.length - 1;
+
     return `
         <section class="dialog_content" onclick="event.stopPropagation()">
             <header class="dialog_header">
@@ -66,11 +75,16 @@ function getDialogTemplate(pokemon, index) {
 
             <div class="dialog_main">
                 <div class="dialog_left">
-                    <div class="dialog_img_area ${pokemon.types[0]}">
+                    <div class="image_nav_container ${pokemon.types[0]}">
                         <div class="dialog_type_container">
                             ${pokemon.types.map(type => `<button class="type-btn ${type}">${type}</button>`).join('')}
                         </div>
+                        
+                        <button class="img_nav_btn left" onclick="changePokemon(event, ${index}, -1)" ${isFirst ? 'disabled' : ''}> ← </button>
+                        
                         <img src="${pokemon.image}" alt="${pokemon.name}">
+                        
+                        <button class="img_nav_btn right" onclick="changePokemon(event, ${index}, 1)" ${isLast ? 'disabled' : ''}> →</button>
                     </div>
                 </div>
 
@@ -85,11 +99,8 @@ function getDialogTemplate(pokemon, index) {
                     </div>
                 </div>
             </div>
-
-            <nav class="dialog_footer_navigation">
-                <button class="nav_btn" onclick="changePokemon(event, ${index}, -1)"> ← </button>
-                <button class="nav_btn" onclick="changePokemon(event, ${index}, 1)"> →</button>
-            </nav>
+            
+            <footer class="dialog_footer_navigation"></footer>
         </section>
     `;
 }
@@ -136,12 +147,11 @@ function showStatsInfo() {
 function changePokemon(event, currentIndex, step) {
     event.stopPropagation();
     let newIndex = currentIndex + step;
-    if (newIndex >= pokemonStorage.length) {
-        newIndex = 0;
+
+    if (newIndex < 0 || newIndex >= pokemonStorage.length) {
+        return; 
     }
-    if (newIndex < 0) {
-        newIndex = pokemonStorage.length - 1;
-    }
+    
     openDialog(newIndex);
 }
 
@@ -176,7 +186,9 @@ function getPokemonCardTemplate(pokemon) {
 
 function openDialogById(id) {
     const index = pokemonStorage.findIndex(pokemon => pokemon.id === id);
-    openDialog(index);
+    if (index !== -1) {
+        openDialog(index);
+    }
 }
 
 function showLoadingScreen() {
