@@ -117,7 +117,16 @@ function getMainInfoTemplate(pokemon) {
         <p><span>Height:</span>${pokemon.height} m</p>
         <p><span>Weight:</span>${pokemon.weight} kg</p>
         <p><span>Base experience:</span>${pokemon.baseExperience}</p>
-        <p><span>Abilities:</span>${pokemon.abilities.join(', ')}</p>
+        <p><span>Abilities:</span>${
+            pokemon.abilities
+                .map(ability =>
+                    ability
+                        .split('-')
+                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                        .join(' ')
+                )
+                .join(', ')
+        }</p>
     `;
 }
 
