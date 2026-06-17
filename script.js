@@ -135,15 +135,41 @@ function handleSearch() {
 
 function checkInput() {
     const input = document.getElementById('searchInput').value;
+    const clearBtn = document.getElementById('clearSearch');
+
     toggleErrorMessage(input.length);
+
+    clearBtn.style.display =
+        input.length > 0
+            ? 'block'
+            : 'none';
+
     if (input.length === 0) {
         currentViewList = pokemonStorage;
+
         document.getElementById('loadMoreBtn').style.display =
             currentOffset <= maxPokemon
                 ? 'block'
                 : 'none';
+
         renderResults(pokemonStorage, "");
     }
+}
+
+function clearSearch() {
+    document.getElementById('searchInput').value = '';
+
+    document.getElementById('errorMessage').style.display = 'none';
+    document.getElementById('clearSearch').style.display = 'none';
+
+    currentViewList = pokemonStorage;
+
+    document.getElementById('loadMoreBtn').style.display =
+        currentOffset <= maxPokemon
+            ? 'block'
+            : 'none';
+
+    renderResults(pokemonStorage, "");
 }
 
 function toggleErrorMessage(length) {

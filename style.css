@@ -138,6 +138,36 @@ h1 {
     margin-top: 5px;
 }
 
+/*Search clear button*/
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    padding-right: 0 8px;
+}
+
+.input-wrapper input {
+    border: none;
+    outline: none;
+    padding: 10px 12px;
+    flex: 1;
+    background: transparent;
+}
+
+.clear-search {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    display: none;
+    padding: 0 10px;
+}
+
+.clear-search:hover {
+    color: #09212a;
+}
+
 /* Load More */
 .load-more-container {
     text-align: center;
@@ -403,38 +433,21 @@ dialog::backdrop {
     min-width: 170px;
 }
 
-.dialog_footer_navigation {
-    height: 50px; 
-    background: #04161d;
-    padding: 0 28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Footer */
-footer {
-    background-color: #09212a;
-    color: white;
-    text-align: center;
-    padding: 30px;
-    margin-top: 40px;
-}
-
 .stat-row {
     display: grid;
     grid-template-columns: 130px 1fr 40px;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
 }
 
 .stat-name {
     color: #ffcb05;
     font-weight: bold;
     text-transform: capitalize;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
 }
 
+/*Progress bar*/
 .progress-bar {
     height: 14px;
     background-color: #123540;
@@ -451,6 +464,24 @@ footer {
 .stat-value {
     text-align: right;
     font-weight: bold;
+}
+
+.dialog_footer_navigation {
+    height: 50px; 
+    background: #04161d;
+    padding: 0 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Footer */
+footer {
+    background-color: #09212a;
+    color: white;
+    text-align: center;
+    padding: 30px;
+    margin-top: 40px;
 }
 
 /* Responsive*/
@@ -555,7 +586,7 @@ footer {
     }
     
     .dialog_left {
-        height: 290px;
+        height: 280px;
     }
     
     .image_nav_container img {
