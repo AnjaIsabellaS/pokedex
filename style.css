@@ -454,6 +454,15 @@ footer {
 }
 
 /* Responsive*/
+@media (min-width: 1440px) {
+    #content,
+    .pokemon_header {
+        width: 1440px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 @media (max-width: 950px) {
     dialog {
         width: 95vw;
