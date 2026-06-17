@@ -21,8 +21,8 @@
             <img src="./assets/icons/pokemon.png" alt="Pokemon">
             <h1>Pokedex</h1>
             <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Suche nach Pokémon..." oninput="checkInput()">
-                <button onclick="handleSearch()">Suchen</button>
+                <input type="text" id="searchInput" placeholder="Search for Pokémon..." oninput="checkInput()">
+                <button onclick="handleSearch()">Search</button>
                 <span id="errorMessage" class="error-message">Bitte mindestens 3 Zeichen eingeben.</span>
             </div>
         </section>
@@ -31,7 +31,7 @@
     <dialog id="pokemonDialog" onclick="if(event.target.id === 'pokemonDialog') this.close()"></dialog>
     <div class="load-more-container">
         <button id="loadMoreBtn" onclick="loadMorePokemon()" class="load-more-btn">
-            Mehr laden
+            Load more
         </button>
 
     </div>
