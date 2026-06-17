@@ -97,8 +97,8 @@ function getDialogTemplate(pokemon, index) {
 
                 <div class="dialog_right">
                     <div class="dialog_tabs">
-                        <button id="mainTab" class="active" onclick="showMainInfo()">main</button>
-                        <button id="statsTab" onclick="showStatsInfo()">stats</button>
+                        <button id="mainTab" class="active" onclick="showMainInfo()">Main</button>
+                        <button id="statsTab" onclick="showStatsInfo()">Stats</button>
                     </div>
 
                     <div id="dialogInfo" class="dialog_stats">
