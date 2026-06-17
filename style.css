@@ -514,6 +514,10 @@ footer {
         height: 350px; 
     }
 
+    .dialog_stats {
+        padding: 20px 32px;
+    }
+
     .image_nav_container img {
         width: 280px;
         height: 280px;
@@ -538,6 +542,10 @@ footer {
 
     .search-container {
         margin-left: 0;
+    }
+
+    .dialog_stats {
+        padding: 20px 32px;
     }
 }
 
@@ -582,7 +590,7 @@ footer {
     }
 
     .dialog_stats p {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
     
     .dialog_left {
@@ -602,6 +610,10 @@ footer {
     
     .dialog_footer_navigation {
         height: 30px;
+    }
+
+    .stat-name {
+        font-size: 1rem;
     }
 }
 
